@@ -1,0 +1,23 @@
+version: '3.2'
+
+services:
+
+  frontend:
+    build: frontend
+    ports:
+      - 20090:80
+    volumes:
+      # Re-use local composer cache via host-volume
+      - ~/.composer-docker/cache:/root/.composer/cache:delegated
+      # Mount source-code for development
+      - ./:/app
+
+  mysql:
+    image: mysql:5.7
+    ports:
+    - 3307:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=redbox
+      - MYSQL_DATABASE=redbox
+      - MYSQL_USER=redbox
+      - MYSQL_PASSWORD=redbox
